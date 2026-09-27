@@ -1,0 +1,6 @@
+timestamp,host,event,vendor,product,serial,user
+2026-09-12 10:14:03,HR-WS-07,CONNECTED,Logitech,USB Receiver,LG77120,priya.k
+2026-09-19 22:52:30,HR-WS-07,CONNECTED,SanDisk,Cruzer Blade,4C530001,hr_admin
+2026-09-19 22:58:47,HR-WS-07,REMOVED,SanDisk,Cruzer Blade,4C530001,hr_admin
+2026-09-21 09:30:11,FIN-WS-02,CONNECTED,Kingston,DataTraveler,KT9921,ravi.s
+2026-09-21 09:31:40,FIN-WS-02,SUSPICIOUS autorun.inf blocked,Kingston,DataTraveler,KT9921,ravi.s

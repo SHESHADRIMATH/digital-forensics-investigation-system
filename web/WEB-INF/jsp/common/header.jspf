@@ -1,0 +1,68 @@
+<%-- Opening layout: sidebar + top bar. Each page sets ${pageTitle} before including this file. --%>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<%@ include file="/WEB-INF/jsp/common/head.jspf" %>
+</head>
+<body>
+<%@ include file="/WEB-INF/jsp/common/icons.jspf" %>
+<a class="skip-link" href="#main">Skip to main content</a>
+<c:set var="ctx" value="${pageContext.request.contextPath}"/>
+<c:set var="me" value="${sessionScope.currentUser}"/>
+<div class="app">
+    <aside class="sidebar" id="sidebar" aria-label="Main navigation">
+        <div class="brand">
+            <span class="brand-mark"><svg class="icon" aria-hidden="true"><use href="#i-shield"/></svg></span>
+            <span><span class="brand-name">ForensiTrack</span><br><span class="brand-sub">ABC Cyber Forensics</span></span>
+        </div>
+        <nav class="nav">
+            <a href="${ctx}/dashboard" ${nav == 'dashboard' ? 'aria-current="page"' : ''}><svg class="icon" aria-hidden="true"><use href="#i-dashboard"/></svg>Dashboard</a>
+            <span class="nav-label">Investigation</span>
+            <a href="${ctx}/cases" ${nav == 'cases' ? 'aria-current="page"' : ''}><svg class="icon" aria-hidden="true"><use href="#i-folder"/></svg>Cases</a>
+            <a href="${ctx}/evidence" ${nav == 'evidence' ? 'aria-current="page"' : ''}><svg class="icon" aria-hidden="true"><use href="#i-file"/></svg>Evidence</a>
+            <a href="${ctx}/custody" ${nav == 'custody' ? 'aria-current="page"' : ''}><svg class="icon" aria-hidden="true"><use href="#i-link"/></svg>Chain of Custody</a>
+            <span class="nav-label">Analysis</span>
+            <a href="${ctx}/analysis" ${nav == 'analysis' ? 'aria-current="page"' : ''}><svg class="icon" aria-hidden="true"><use href="#i-activity"/></svg>Log Analysis</a>
+            <a href="${ctx}/timeline" ${nav == 'timeline' ? 'aria-current="page"' : ''}><svg class="icon" aria-hidden="true"><use href="#i-clock"/></svg>Timeline</a>
+            <a href="${ctx}/findings" ${nav == 'findings' ? 'aria-current="page"' : ''}><svg class="icon" aria-hidden="true"><use href="#i-alert"/></svg>Findings</a>
+            <a href="${ctx}/reports" ${nav == 'reports' ? 'aria-current="page"' : ''}><svg class="icon" aria-hidden="true"><use href="#i-report"/></svg>Reports</a>
+        </nav>
+        <div class="sidebar-foot">
+            <div class="user-chip">
+                <span class="avatar" aria-hidden="true"><c:out value="${me.initials}"/></span>
+                <span><span class="name"><c:out value="${me.fullName}"/></span><br><span class="role"><c:out value="${me.role.label}"/></span></span>
+            </div>
+            <form method="post" action="${ctx}/logout">
+                <input type="hidden" name="csrf" value="${sessionScope.csrfToken}">
+                <button type="submit" class="logout-btn"><svg class="icon" aria-hidden="true"><use href="#i-logout"/></svg>Log out</button>
+            </form>
+        </div>
+    </aside>
+    <div class="scrim" aria-hidden="true"></div>
+
+    <div class="main">
+        <header class="topbar">
+            <button type="button" class="icon-btn menu-btn" aria-label="Open menu" aria-controls="sidebar" aria-expanded="false">
+                <svg class="icon" aria-hidden="true"><use href="#i-menu"/></svg>
+            </button>
+            <div class="crumbs">
+                <span>ForensiTrack</span><svg class="icon icon-sm" aria-hidden="true"><use href="#i-chevron"/></svg>
+                <strong><c:out value="${pageTitle}"/></strong>
+            </div>
+            <div class="topbar-actions">
+                <span class="role-pill"><c:out value="${me.role.label}"/></span>
+                <button type="button" class="icon-btn theme-toggle" aria-label="Toggle theme">
+                    <svg class="icon show-in-light" aria-hidden="true"><use href="#i-moon"/></svg>
+                    <svg class="icon show-in-dark" aria-hidden="true"><use href="#i-sun"/></svg>
+                </button>
+            </div>
+        </header>
+
+        <main class="content" id="main" tabindex="-1">
+            <c:if test="${not empty flash}">
+                <div class="alert alert-${flashType == 'error' ? 'error' : (flashType == 'info' ? 'info' : 'success')}" role="${flashType == 'error' ? 'alert' : 'status'}">
+                    <svg class="icon" aria-hidden="true"><use href="#${flashType == 'error' ? 'i-alert' : 'i-check'}"/></svg>
+                    <span><c:out value="${flash}"/></span>
+                    <button type="button" class="alert-close" aria-label="Dismiss message"><svg class="icon icon-sm" aria-hidden="true"><use href="#i-x"/></svg></button>
+                </div>
+            </c:if>
